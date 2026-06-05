@@ -1,0 +1,261 @@
+export const LEVELS = {
+  EASY: 'facile',
+  MEDIUM: 'moyen',
+  HARD: 'difficile',
+};
+
+export const CATEGORIES = {
+  QUIZ: 'quiz',
+  MEMORY: 'memoire',
+  SYLLABLES: 'syllabes',
+  RHYMES: 'rimes',
+  SOUNDS: 'sons',
+};
+
+// Quiz : questions orthographe / grammaire
+export const quizQuestions = [
+  {
+    id: 'q1',
+    level: LEVELS.EASY,
+    question: 'Comment s\'écrit le son "o" dans le mot "château" ?',
+    options: ['o', 'au', 'eau', 'ô'],
+    answer: 'eau',
+    explanation: 'Dans "château", le son [o] s\'écrit "eau".',
+  },
+  {
+    id: 'q2',
+    level: LEVELS.EASY,
+    question: 'Quel mot contient le son "f" ?',
+    options: ['vache', 'photo', 'bateau', 'maison'],
+    answer: 'photo',
+    explanation: '"ph" fait le son [f] dans "photo".',
+  },
+  {
+    id: 'q3',
+    level: LEVELS.EASY,
+    question: 'Combien de syllabes dans "papillon" ?',
+    options: ['2', '3', '4', '5'],
+    answer: '3',
+    explanation: 'pa-pil-lon = 3 syllabes.',
+  },
+  {
+    id: 'q4',
+    level: LEVELS.EASY,
+    question: 'Quel est le pluriel de "cheval" ?',
+    options: ['chevals', 'chevaux', 'chévaux', 'cheveaux'],
+    answer: 'chevaux',
+    explanation: 'Les mots en "-al" font leur pluriel en "-aux".',
+  },
+  {
+    id: 'q5',
+    level: LEVELS.EASY,
+    question: 'Comment s\'écrit le son "in" dans "lapin" ?',
+    options: ['ain', 'ein', 'in', 'un'],
+    answer: 'in',
+    explanation: 'Dans "lapin", le son [ɛ̃] s\'écrit "in".',
+  },
+  {
+    id: 'q6',
+    level: LEVELS.MEDIUM,
+    question: 'Quel mot est correctement orthographié ?',
+    options: ['grenouille', 'grinouille', 'grenouile', 'granouille'],
+    answer: 'grenouille',
+    explanation: 'On écrit "grenouille" avec "ou" et deux "l".',
+  },
+  {
+    id: 'q7',
+    level: LEVELS.MEDIUM,
+    question: 'Quelle lettre est muette dans "temps" ?',
+    options: ['t', 'e', 'p', 's'],
+    answer: 'ps',
+    explanation: '"temps" se prononce [tɑ̃], le "p" et le "s" sont muets.',
+  },
+  {
+    id: 'q8',
+    level: LEVELS.MEDIUM,
+    question: 'Quel son entends-tu au début de "girafe" ?',
+    options: ['g dur (gâteau)', 'j (jardin)', 'ch (chat)', 'z (zèbre)'],
+    answer: 'j (jardin)',
+    explanation: '"g" devant "i" ou "e" fait le son [ʒ] comme dans "jardin".',
+  },
+  {
+    id: 'q9',
+    level: LEVELS.MEDIUM,
+    question: 'Dans "bicycle", combien de syllabes ?',
+    options: ['2', '3', '4', '5'],
+    answer: '3',
+    explanation: 'bi-cy-cle = 3 syllabes.',
+  },
+  {
+    id: 'q10',
+    level: LEVELS.HARD,
+    question: 'Quel mot utilise le son "s" écrit "c" ?',
+    options: ['cadeau', 'citron', 'crocodile', 'carotte'],
+    answer: 'citron',
+    explanation: '"c" devant "i" fait le son [s] dans "citron".',
+  },
+  {
+    id: 'q11',
+    level: LEVELS.HARD,
+    question: 'Quel mot est un homonyme de "verre" ?',
+    options: ['vert', 'vair', 'ver', 'Tous les trois'],
+    answer: 'Tous les trois',
+    explanation: 'verre/vert/vair/ver = 4 homonymes du son [vɛʁ].',
+  },
+  {
+    id: 'q12',
+    level: LEVELS.HARD,
+    question: 'Comment s\'écrit "on entend" au passé composé ?',
+    options: ["on a entendu", "on a entendé", "on a entendit", "on a entendut"],
+    answer: 'on a entendu',
+    explanation: 'Le participe passé de "entendre" est "entendu".',
+  },
+];
+
+// Paires mémoire : mot + image emoji
+export const memoryPairs = [
+  { id: 'm1', word: 'papillon', emoji: '🦋', level: LEVELS.EASY },
+  { id: 'm2', word: 'éléphant', emoji: '🐘', level: LEVELS.EASY },
+  { id: 'm3', word: 'fraise', emoji: '🍓', level: LEVELS.EASY },
+  { id: 'm4', word: 'maison', emoji: '🏠', level: LEVELS.EASY },
+  { id: 'm5', word: 'soleil', emoji: '☀️', level: LEVELS.EASY },
+  { id: 'm6', word: 'grenouille', emoji: '🐸', level: LEVELS.MEDIUM },
+  { id: 'm7', word: 'girafe', emoji: '🦒', level: LEVELS.MEDIUM },
+  { id: 'm8', word: 'chocolat', emoji: '🍫', level: LEVELS.MEDIUM },
+  { id: 'm9', word: 'bibliothèque', emoji: '📚', level: LEVELS.HARD },
+  { id: 'm10', word: 'crocodile', emoji: '🐊', level: LEVELS.HARD },
+];
+
+// Syllabes : remettre dans l'ordre
+export const syllableGames = [
+  { id: 's1', word: 'lapin', syllables: ['la', 'pin'], level: LEVELS.EASY },
+  { id: 's2', word: 'maison', syllables: ['mai', 'son'], level: LEVELS.EASY },
+  { id: 's3', word: 'bateau', syllables: ['ba', 'teau'], level: LEVELS.EASY },
+  { id: 's4', word: 'papillon', syllables: ['pa', 'pil', 'lon'], level: LEVELS.EASY },
+  { id: 's5', word: 'chocolat', syllables: ['cho', 'co', 'lat'], level: LEVELS.MEDIUM },
+  { id: 's6', word: 'éléphant', syllables: ['é', 'lé', 'phant'], level: LEVELS.MEDIUM },
+  { id: 's7', word: 'grenouille', syllables: ['gre', 'nouil', 'le'], level: LEVELS.MEDIUM },
+  { id: 's8', word: 'bibliothèque', syllables: ['bi', 'blio', 'thè', 'que'], level: LEVELS.HARD },
+  { id: 's9', word: 'hippopotame', syllables: ['hip', 'po', 'po', 'ta', 'me'], level: LEVELS.HARD },
+  { id: 's10', word: 'crocodile', syllables: ['cro', 'co', 'di', 'le'], level: LEVELS.HARD },
+];
+
+// Rimes : trouver le mot qui rime
+export const rhymeGames = [
+  {
+    id: 'r1',
+    word: 'chat',
+    options: ['rat', 'chien', 'lapin', 'oiseau'],
+    answer: 'rat',
+    level: LEVELS.EASY,
+    hint: 'Il vit dans les maisons...',
+  },
+  {
+    id: 'r2',
+    word: 'maison',
+    options: ['saison', 'chien', 'table', 'rouge'],
+    answer: 'saison',
+    level: LEVELS.EASY,
+    hint: 'L\'été, l\'automne, l\'hiver, le printemps...',
+  },
+  {
+    id: 'r3',
+    word: 'soleil',
+    options: ['abeille', 'lune', 'étoile', 'nuage'],
+    answer: 'abeille',
+    level: LEVELS.EASY,
+    hint: 'Elle fait du miel...',
+  },
+  {
+    id: 'r4',
+    word: 'lapin',
+    options: ['matin', 'cheval', 'arbre', 'fleur'],
+    answer: 'matin',
+    level: LEVELS.EASY,
+    hint: 'Le début de la journée...',
+  },
+  {
+    id: 'r5',
+    word: 'grenouille',
+    options: ['citrouille', 'papillon', 'tortue', 'oiseau'],
+    answer: 'citrouille',
+    level: LEVELS.MEDIUM,
+    hint: 'Un légume orange d\'Halloween...',
+  },
+  {
+    id: 'r6',
+    word: 'ballon',
+    options: ['mouton', 'maison', 'salon', 'jardin'],
+    answer: 'salon',
+    level: LEVELS.MEDIUM,
+    hint: 'La pièce du canapé...',
+  },
+  {
+    id: 'r7',
+    word: 'chenille',
+    options: ['fille', 'garçon', 'enfant', 'arbre'],
+    answer: 'fille',
+    level: LEVELS.MEDIUM,
+    hint: 'Le contraire de garçon...',
+  },
+  {
+    id: 'r8',
+    word: 'hibou',
+    options: ['genou', 'loup', 'ours', 'renard'],
+    answer: 'genou',
+    level: LEVELS.HARD,
+    hint: 'La partie du corps entre la cuisse et le mollet...',
+  },
+];
+
+// Sons : identifier le son dans un mot
+export const soundGames = [
+  {
+    id: 'so1',
+    instruction: 'Quel mot commence par le son "ch" comme dans "chat" ?',
+    options: ['chapeau', 'salade', 'voiture', 'jardin'],
+    answer: 'chapeau',
+    level: LEVELS.EASY,
+    targetSound: 'ch',
+  },
+  {
+    id: 'so2',
+    instruction: 'Quel mot contient le son "ou" comme dans "loup" ?',
+    options: ['mouton', 'cheval', 'lapin', 'oiseau'],
+    answer: 'mouton',
+    level: LEVELS.EASY,
+    targetSound: 'ou',
+  },
+  {
+    id: 'so3',
+    instruction: 'Quel mot finit par le son "on" comme dans "maison" ?',
+    options: ['ballon', 'table', 'fleur', 'arbre'],
+    answer: 'ballon',
+    level: LEVELS.EASY,
+    targetSound: 'on',
+  },
+  {
+    id: 'so4',
+    instruction: 'Quel mot contient le son "in" comme dans "lapin" ?',
+    options: ['train', 'maison', 'cheval', 'fleur'],
+    answer: 'train',
+    level: LEVELS.MEDIUM,
+    targetSound: 'in',
+  },
+  {
+    id: 'so5',
+    instruction: 'Quel mot contient le son "an" comme dans "maman" ?',
+    options: ['chambre', 'soleil', 'lapin', 'chat'],
+    answer: 'chambre',
+    level: LEVELS.MEDIUM,
+    targetSound: 'an',
+  },
+  {
+    id: 'so6',
+    instruction: 'Quel mot contient deux fois le son "o" ?',
+    options: ['chocolat', 'lapin', 'maison', 'chat'],
+    answer: 'chocolat',
+    level: LEVELS.HARD,
+    targetSound: 'o',
+  },
+];
