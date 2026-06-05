@@ -1,150 +1,179 @@
 import { useApp } from '../context/AppContext';
 
+const COLS = 5;
+const TOTAL = 20;
+
 const GAMES = [
-  {
-    id: 'quiz',
-    label: 'Quiz Orthographe',
-    emoji: '📝',
-    desc: 'Réponds aux questions sur les mots',
-    color: 'from-blue-400 to-blue-600',
-    bg: 'bg-blue-50',
-  },
-  {
-    id: 'memory',
-    label: 'Jeu de Mémoire',
-    emoji: '🃏',
-    desc: 'Associe les mots et les images',
-    color: 'from-green-400 to-green-600',
-    bg: 'bg-green-50',
-  },
-  {
-    id: 'syllables',
-    label: 'Les Syllabes',
-    emoji: '🔤',
-    desc: "Remets les syllabes dans l'ordre",
-    color: 'from-orange-400 to-orange-600',
-    bg: 'bg-orange-50',
-  },
-  {
-    id: 'rhymes',
-    label: 'Les Rimes',
-    emoji: '🎵',
-    desc: 'Trouve le mot qui rime',
-    color: 'from-pink-400 to-pink-600',
-    bg: 'bg-pink-50',
-  },
-  {
-    id: 'sounds',
-    label: 'Les Sons',
-    emoji: '👂',
-    desc: 'Identifie les sons dans les mots',
-    color: 'from-purple-400 to-purple-600',
-    bg: 'bg-purple-50',
-  },
+  { id: 'quiz',      label: 'Quiz',     emoji: '📝', gradient: 'linear-gradient(135deg,#2563eb,#1d4ed8)' },
+  { id: 'memory',    label: 'Mémoire',  emoji: '🃏', gradient: 'linear-gradient(135deg,#059669,#047857)' },
+  { id: 'syllables', label: 'Syllabes', emoji: '🔤', gradient: 'linear-gradient(135deg,#ea580c,#c2410c)' },
+  { id: 'rhymes',    label: 'Rimes',    emoji: '🎵', gradient: 'linear-gradient(135deg,#db2777,#be185d)' },
+  { id: 'sounds',    label: 'Sons',     emoji: '👂', gradient: 'linear-gradient(135deg,#7c3aed,#6d28d9)' },
 ];
 
-const BADGE_INFO = {
-  bronze: { emoji: '🥉', label: '10 étoiles' },
-  argent: { emoji: '🥈', label: '30 étoiles' },
-  or: { emoji: '🥇', label: '60 étoiles' },
+// Cycling pastel colors for squares
+const SQUARE_STYLES = [
+  { bg: '#fde8d8', border: '#f97316' },
+  { bg: '#fef9c3', border: '#eab308' },
+  { bg: '#dcfce7', border: '#22c55e' },
+  { bg: '#dbeafe', border: '#3b82f6' },
+  { bg: '#f3e8ff', border: '#a855f7' },
+  { bg: '#fce7f3', border: '#ec4899' },
+  { bg: '#e0f2fe', border: '#0ea5e9' },
+  { bg: '#fff7ed', border: '#f97316' },
+  { bg: '#f0fdf4', border: '#16a34a' },
+  { bg: '#faf5ff', border: '#9333ea' },
+];
+
+const SPECIALS = {
+  1:  { icon: '🚩', label: 'Départ' },
+  5:  { icon: '⭐', label: 'Bonus' },
+  10: { icon: '🎲', label: 'Chance' },
+  15: { icon: '🌈', label: 'Arc-en-ciel' },
+  20: { icon: '🏆', label: 'Arrivée' },
 };
+
+function buildBoard() {
+  const rows = Math.ceil(TOTAL / COLS);
+  const board = [];
+  for (let r = 0; r < rows; r++) {
+    const row = [];
+    const rowFromBottom = rows - 1 - r;
+    const startNum = rowFromBottom * COLS + 1;
+    for (let c = 0; c < COLS; c++) {
+      const num = rowFromBottom % 2 === 0
+        ? startNum + c
+        : startNum + (COLS - 1 - c);
+      if (num <= TOTAL) row.push(num);
+    }
+    board.push(row);
+  }
+  return board;
+}
+
+const BOARD = buildBoard();
 
 export default function Home() {
   const { profile, setCurrentPage } = useApp();
-
-  const nextBadge = !profile.badges.includes('bronze')
-    ? { need: 10, name: 'Bronze' }
-    : !profile.badges.includes('argent')
-    ? { need: 30, name: 'Argent' }
-    : !profile.badges.includes('or')
-    ? { need: 60, name: 'Or' }
-    : null;
-
-  const progress = nextBadge
-    ? Math.min((profile.stars / nextBadge.need) * 100, 100)
-    : 100;
+  const playerPos = Math.min(profile.completedExercises.length, TOTAL);
 
   return (
-    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto">
-
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4 sm:mb-6 bg-white rounded-3xl p-4 sm:p-5 shadow-md">
-          <div className="flex items-center gap-3">
-            <span className="text-4xl sm:text-5xl">{profile.avatar}</span>
-            <div>
-              <p className="font-bold text-gray-800 text-lg sm:text-xl">{profile.name}</p>
-              <div className="flex items-center gap-1">
-                <span className="text-yellow-500">⭐</span>
-                <span className="font-semibold text-gray-600 text-sm sm:text-base">{profile.stars} étoiles</span>
-              </div>
-            </div>
-          </div>
-          <div className="text-right">
-            {profile.badges.length > 0 && (
-              <div className="flex gap-1 justify-end mb-1">
-                {profile.badges.map(b => (
-                  <span key={b} className="text-2xl" title={BADGE_INFO[b]?.label}>
-                    {BADGE_INFO[b]?.emoji}
-                  </span>
-                ))}
-              </div>
-            )}
-            <button
-              onClick={() => setCurrentPage('progress')}
-              className="text-xs sm:text-sm text-purple-500 underline"
-            >
-              Voir mes progrès
-            </button>
+    <div
+      className="h-full w-full overflow-hidden flex flex-col"
+      style={{ background: 'linear-gradient(160deg, #1b4332 0%, #2d6a4f 60%, #1b4332 100%)' }}
+    >
+      {/* ── Top bar ─────────────────────────────────────────────── */}
+      <div className="flex-shrink-0 flex items-center justify-between px-4 py-2 bg-black/25 text-white">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl leading-none">{profile.avatar}</span>
+          <div className="leading-tight">
+            <p className="font-black text-base">{profile.name}</p>
+            <p className="text-xs text-yellow-300">⭐ {profile.stars} étoile{profile.stars !== 1 ? 's' : ''}</p>
           </div>
         </div>
 
-        {/* Progress bar */}
-        {nextBadge && (
-          <div className="bg-white rounded-2xl p-3 shadow-sm mb-4 sm:mb-6 flex items-center gap-3">
-            <span className="text-xs sm:text-sm text-gray-500 whitespace-nowrap">
-              Badge {nextBadge.name} :
+        <div className="flex items-center gap-2">
+          {profile.badges.map(b => (
+            <span key={b} className="text-xl leading-none">
+              {b === 'or' ? '🥇' : b === 'argent' ? '🥈' : '🥉'}
             </span>
-            <div className="flex-1 bg-gray-100 rounded-full h-3 overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full transition-all duration-500"
-                style={{ width: `${progress}%` }}
-              />
+          ))}
+          <button
+            onClick={() => setCurrentPage('progress')}
+            className="text-xs font-bold bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-xl transition-all"
+          >
+            Progrès
+          </button>
+        </div>
+      </div>
+
+      {/* ── Subtitle ─────────────────────────────────────────────── */}
+      <div className="flex-shrink-0 text-center py-1">
+        <span className="text-white/70 text-xs font-semibold tracking-widest uppercase">
+          Case {playerPos} / {TOTAL} — avance en jouant !
+        </span>
+      </div>
+
+      {/* ── Board ────────────────────────────────────────────────── */}
+      <div className="flex-1 px-3 pb-1 min-h-0">
+        <div
+          className="h-full rounded-2xl p-2 flex flex-col gap-1.5"
+          style={{
+            background: 'linear-gradient(135deg, #fef9f0 0%, #fdf0d5 100%)',
+            border: '4px solid #92400e',
+            boxShadow: '0 0 0 2px #fbbf24, inset 0 2px 10px rgba(0,0,0,0.08)',
+          }}
+        >
+          {BOARD.map((row, ri) => (
+            <div key={ri} className="flex-1 flex gap-1.5 min-h-0">
+              {row.map(num => {
+                const isPlayer  = num === playerPos;
+                const isPassed  = num < playerPos;
+                const style     = SQUARE_STYLES[(num - 1) % SQUARE_STYLES.length];
+                const special   = SPECIALS[num];
+
+                return (
+                  <div
+                    key={num}
+                    className="flex-1 rounded-xl flex flex-col items-center justify-center relative overflow-hidden transition-transform"
+                    style={{
+                      background: style.bg,
+                      border: `2px solid ${style.border}`,
+                      transform: isPlayer ? 'scale(1.06)' : undefined,
+                      boxShadow: isPlayer
+                        ? `0 0 0 3px #fbbf24, 0 4px 12px rgba(0,0,0,0.25)`
+                        : '0 1px 3px rgba(0,0,0,0.08)',
+                      zIndex: isPlayer ? 10 : undefined,
+                      opacity: isPassed && !isPlayer ? 0.65 : 1,
+                    }}
+                  >
+                    {/* Passed overlay */}
+                    {isPassed && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/10 rounded-xl">
+                        <span className="text-green-700 font-black text-xl">✓</span>
+                      </div>
+                    )}
+
+                    {/* Number */}
+                    <span
+                      className="absolute top-0.5 left-1 text-[10px] font-black leading-none"
+                      style={{ color: style.border }}
+                    >
+                      {num}
+                    </span>
+
+                    {/* Icon: player > special > dot */}
+                    {isPlayer ? (
+                      <span className="text-2xl sm:text-3xl lg:text-4xl leading-none">{profile.avatar}</span>
+                    ) : special ? (
+                      <div className="flex flex-col items-center">
+                        <span className="text-xl sm:text-2xl lg:text-3xl leading-none">{special.icon}</span>
+                        <span className="text-[8px] sm:text-[10px] font-bold text-gray-500 leading-none mt-0.5 hidden sm:block">{special.label}</span>
+                      </div>
+                    ) : (
+                      <span className="text-base sm:text-xl text-gray-300">·</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
-            <span className="text-xs sm:text-sm font-bold text-orange-500 whitespace-nowrap">
-              {profile.stars}/{nextBadge.need} ⭐
-            </span>
-          </div>
-        )}
-
-        {/* Title */}
-        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center text-gray-700 mb-4 sm:mb-6">
-          Quel jeu aujourd'hui ? 🎯
-        </h2>
-
-        {/* Game cards : 1 col mobile, 2 col tablet+, 3 col desktop large */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-          {GAMES.map(game => (
-            <button
-              key={game.id}
-              onClick={() => setCurrentPage(game.id)}
-              className={`${game.bg} rounded-3xl p-4 sm:p-5 flex items-center gap-4 shadow-md hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all text-left border-2 border-transparent hover:border-white`}
-            >
-              <div className={`bg-gradient-to-br ${game.color} text-white text-2xl sm:text-3xl w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0`}>
-                {game.emoji}
-              </div>
-              <div>
-                <p className="font-bold text-gray-800 text-base sm:text-lg">{game.label}</p>
-                <p className="text-gray-500 text-xs sm:text-sm">{game.desc}</p>
-              </div>
-              <span className="ml-auto text-gray-400 text-2xl">›</span>
-            </button>
           ))}
         </div>
+      </div>
 
-        <p className="text-center text-xs text-gray-400 mt-8 pb-4">
-          OrthoPlay — Pour t'entraîner entre tes séances 💜
-        </p>
+      {/* ── Game buttons ─────────────────────────────────────────── */}
+      <div className="flex-shrink-0 flex gap-2 px-3 py-2">
+        {GAMES.map(g => (
+          <button
+            key={g.id}
+            onClick={() => setCurrentPage(g.id)}
+            className="flex-1 rounded-2xl py-2 px-1 flex flex-col items-center text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all"
+            style={{ background: g.gradient }}
+          >
+            <span className="text-2xl sm:text-3xl leading-none">{g.emoji}</span>
+            <span className="text-[10px] sm:text-xs font-black mt-0.5 tracking-wide">{g.label}</span>
+          </button>
+        ))}
       </div>
     </div>
   );

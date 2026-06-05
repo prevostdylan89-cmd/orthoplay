@@ -4,22 +4,28 @@ export default function GameShell({ title, emoji, color, children, onBack }) {
   const { setCurrentPage } = useApp();
 
   return (
-    <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-      <div className="max-w-xl sm:max-w-2xl lg:max-w-3xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-5 sm:mb-6">
-          <button
-            onClick={onBack || (() => setCurrentPage('home'))}
-            className="bg-white rounded-2xl px-4 py-2 shadow-md font-semibold text-gray-600 text-sm sm:text-base hover:bg-gray-50 active:scale-95 transition-all"
-          >
-            ← Retour
-          </button>
-          <div className={`bg-gradient-to-br ${color} text-white text-xl sm:text-2xl w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shadow-lg`}>
-            {emoji}
-          </div>
-          <h1 className="font-bold text-gray-800 text-lg sm:text-xl">{title}</h1>
+    <div
+      className="h-full w-full overflow-hidden flex flex-col"
+      style={{ background: 'linear-gradient(160deg, #1b4332 0%, #2d6a4f 60%, #1b4332 100%)' }}
+    >
+      {/* Header */}
+      <div className="flex-shrink-0 flex items-center gap-3 px-4 py-3 bg-black/25 text-white">
+        <button
+          onClick={onBack || (() => setCurrentPage('home'))}
+          className="bg-white/20 hover:bg-white/30 active:scale-95 rounded-xl px-4 py-2 font-bold text-sm transition-all"
+        >
+          ← Retour
+        </button>
+        <div
+          className={`bg-gradient-to-br ${color} text-xl w-10 h-10 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0`}
+        >
+          {emoji}
         </div>
+        <h1 className="font-black text-lg leading-tight">{title}</h1>
+      </div>
 
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto p-4">
         {children}
       </div>
     </div>

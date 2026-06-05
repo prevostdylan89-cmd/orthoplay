@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
+html, body {
+  height: 100%;
+  overflow: hidden;
   font-family: 'Segoe UI', Roboto, sans-serif;
-  background: #d9f0d9;
-  min-height: 100vh;
+  background: #1b4332;
 }
 
 #root {
-  min-height: 100vh;
+  height: 100%;
 }
