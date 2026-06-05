@@ -107,7 +107,7 @@ export default function QuizGame() {
       </div>
 
       {/* Options */}
-      <div className="grid grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 mb-4">
         {q.options.map(opt => {
           const isCorrect = opt === q.answer;
           const isSelected = opt === selected;

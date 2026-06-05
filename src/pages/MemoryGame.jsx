@@ -107,7 +107,7 @@ export default function MemoryGame() {
         <span className="text-sm text-gray-500">Essais : <strong className="text-gray-700">{moves}</strong></span>
       </div>
 
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 gap-2 sm:gap-3">
         {cards.map(card => {
           const isFlipped = flipped.includes(card.id);
           const isMatched = matched.includes(card.pairId);
